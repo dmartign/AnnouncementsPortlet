@@ -26,12 +26,6 @@ public class ThemeViewNameSelector implements IViewNameSelector {
     protected static final String MOBILE_THEMES_KEY = "mobileThemes";
     protected static final String[] MOBILE_THEMES_DEFAULT = new String[]{ "UniversalityMobile" };
 
-    private String mobileKey = "jqm";
-    
-    public void setMobileKey(String mobileKey) {
-        this.mobileKey = mobileKey;
-    }
-    
     public String select(PortletRequest req, String baseViewName) {
         
         // Assertions.
@@ -39,9 +33,10 @@ public class ThemeViewNameSelector implements IViewNameSelector {
             String msg = "Argument 'req' cannot be null";
             throw new IllegalArgumentException(msg);
         }
-        
+       
+        // NOTE: unifying theme for normal view and mobile 
         if (isMobile(req)) {
-            return baseViewName.concat(".").concat(mobileKey);
+            return baseViewName;
         } else {
             return baseViewName;            
         }
