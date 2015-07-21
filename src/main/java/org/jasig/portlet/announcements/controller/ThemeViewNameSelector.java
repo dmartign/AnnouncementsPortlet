@@ -19,12 +19,22 @@
 package org.jasig.portlet.announcements.controller;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.xml.namespace.QName;
+
+import java.util.Comparator;
 
 public class ThemeViewNameSelector implements IViewNameSelector {
 
     protected static final String THEME_NAME_PROPERTY = "themeName";
     protected static final String MOBILE_THEMES_KEY = "mobileThemes";
     protected static final String[] MOBILE_THEMES_DEFAULT = new String[]{ "UniversalityMobile" };
+    protected static final String RESPONDR = "respondr";
+    protected static final String[] RESPONDR_VALUE = new String[]{ "true" }; 
 
     private String mobileKey = "jqm";
     
@@ -39,11 +49,17 @@ public class ThemeViewNameSelector implements IViewNameSelector {
             String msg = "Argument 'req' cannot be null";
             throw new IllegalArgumentException(msg);
         }
-        
-        if (isMobile(req)) {
-            return baseViewName.concat(".").concat(mobileKey);
-        } else {
-            return baseViewName;            
+       
+        // respondr property to select theme to display  
+        if (isRespondr(req)) { 
+            return baseViewName;
+        }
+        else {
+            if (isMobile(req)) {
+                return baseViewName.concat(".").concat(mobileKey);
+            } else {
+                return baseViewName;
+            }            
         }
         
     }
@@ -63,6 +79,16 @@ public class ThemeViewNameSelector implements IViewNameSelector {
         
         return false;
     }
-
+ 
+    // Adds portlet preference for respondr 
+    protected boolean isRespondr(PortletRequest respRequest) {
+        String[] respondrReq = respRequest.getPreferences().getValues(RESPONDR, RESPONDR_VALUE);
+        if (respondrReq.equals("respondr")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
 }

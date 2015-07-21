@@ -104,6 +104,11 @@
                 <value>false</value>
                 <read-only>false</read-only>
             </preference>
+            <preference>
+                <name>AnnouncementsViewController.respondr</name>
+                <value>true</value>
+                <read-only>true</read-only>
+            </preference>
             <!-- Listed topics (by title) will be broadcast as notifications for 
                  display in the Apereo NotificationPortlet.  The NotificationPortlet 
                  infrastructure underpins both Notification and EmergencyAlert portlets.  -->

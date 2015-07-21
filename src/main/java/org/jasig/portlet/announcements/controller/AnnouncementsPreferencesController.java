@@ -49,7 +49,7 @@ import java.util.List;
 @Controller
 @RequestMapping("EDIT")
 public class AnnouncementsPreferencesController {
-
+    
     private static final String GUEST_USERNAME = "guest";
     private final Logger logger = Logger.getLogger(getClass());
 
@@ -63,6 +63,7 @@ public class AnnouncementsPreferencesController {
     private final IViewNameSelector viewNameSelector = null;
 
     public static final String PREFERENCE_HIDE_ABSTRACT = "AnnouncementsViewController.hideAbstract";
+    public static final String PREFERENCE_RESPONDR = "AnnouncementsViewController.respondr";
 
     public void setTss(ITopicSubscriptionService tss) {
         this.tss = tss;
@@ -83,6 +84,7 @@ public class AnnouncementsPreferencesController {
         model.addAttribute("topicSubscriptions", myTopics);
         model.addAttribute("topicsToUpdate", myTopics.size());
         model.addAttribute("prefHideAbstract",Boolean.valueOf(prefs.getValue(PREFERENCE_HIDE_ABSTRACT,"false")));
+        model.addAttribute("prefRespondr",Boolean.valueOf(prefs.getValue(PREFERENCE_RESPONDR,"true")));
         return viewNameSelector.select(request, "editDisplayPreferences");
     }
 
@@ -131,11 +133,15 @@ public class AnnouncementsPreferencesController {
 
         String hideAbstract = Boolean.valueOf(request.getParameter("hideAbstract")).toString();
         prefs.setValue(PREFERENCE_HIDE_ABSTRACT,hideAbstract);
+
+        // portlet preference for respondr property
+        String respondrValue = Boolean.valueOf(request.getParameter("respondr")).toString();
+        prefs.setValue(PREFERENCE_RESPONDR,respondrValue);
+
         prefs.store();
 
         response.setPortletMode(PortletMode.VIEW);
         response.setRenderParameter("action", "displayAnnouncements");
-
     }
   	
   	@ModelAttribute("isGuest")
