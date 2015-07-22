@@ -49,16 +49,6 @@ public class UserAgentViewNameSelector implements IViewNameSelector, Initializin
         
         StringBuilder rslt = new StringBuilder(baseViewName);
         
-        String userAgent = req.getProperty("user-agent");
-        if (userAgent != null && patterns.size() != 0) {
-            for (Map.Entry<Pattern,String> y : patterns.entrySet()) {
-                if (y.getKey().matcher(userAgent).matches()) {
-                    rslt.append(y.getValue());
-                    break;
-                }
-            }
-        }
-
         return rslt.toString();
 
     }
