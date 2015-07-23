@@ -63,6 +63,7 @@ public class AnnouncementsPreferencesController {
     private final IViewNameSelector viewNameSelector = null;
 
     public static final String PREFERENCE_HIDE_ABSTRACT = "AnnouncementsViewController.hideAbstract";
+    public static final String PREFERENCE_RESPONDR = "AnnouncementsViewController.respondr";
 
     public void setTss(ITopicSubscriptionService tss) {
         this.tss = tss;
@@ -131,10 +132,20 @@ public class AnnouncementsPreferencesController {
 
         String hideAbstract = Boolean.valueOf(request.getParameter("hideAbstract")).toString();
         prefs.setValue(PREFERENCE_HIDE_ABSTRACT,hideAbstract);
+      
+        
         prefs.store();
 
         response.setPortletMode(PortletMode.VIEW);
         response.setRenderParameter("action", "displayAnnouncements");
+
+    }
+
+    public void saveRespondr(ActionRequest req, ActionResponse resp) throws PortletException,IOException {
+        PortletPreferences respondrPref = req.getPreferences();
+        String respondrVal = Boolean.valueOf(req.getParameter("respondr")).toString();
+        respondrPref.setValue(PREFERENCE_RESPONDR,respondrVal);
+        respondrPref.store();
 
     }
   	

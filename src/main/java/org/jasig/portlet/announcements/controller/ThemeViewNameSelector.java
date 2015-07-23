@@ -47,7 +47,7 @@ public class ThemeViewNameSelector implements IViewNameSelector {
         }
         
     }
-    
+
     protected boolean isMobile(PortletRequest request) {
         String[] mobileThemes = request.getPreferences().getValues(MOBILE_THEMES_KEY, MOBILE_THEMES_DEFAULT);
         String themeName = request.getProperty(THEME_NAME_PROPERTY);

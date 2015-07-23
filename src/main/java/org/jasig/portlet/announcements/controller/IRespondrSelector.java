@@ -20,7 +20,7 @@ package org.jasig.portlet.announcements.controller;
 
 import javax.portlet.PortletRequest;
 
-public interface IViewNameSelector {
+public interface IRespondrSelector {
     
-    String select(PortletRequest req, String baseViewName);
+    Boolean sentVal(PortletRequest req, String value);
 }

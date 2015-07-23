@@ -27,10 +27,11 @@ import javax.portlet.PortletRequest;
 
 import org.springframework.beans.factory.InitializingBean;
 
-public class UserAgentViewNameSelector implements IViewNameSelector, InitializingBean {
+public class UserAgentViewNameSelector implements IViewNameSelector, IRespondrSelector, InitializingBean {
     
     private Map<String,String> userAgentMappings;
     private final Map<Pattern,String> patterns = new HashMap<Pattern,String>();
+    protected Boolean renderNormal; 
 
     public void afterPropertiesSet() {
         // Compile our patterns
@@ -48,21 +49,37 @@ public class UserAgentViewNameSelector implements IViewNameSelector, Initializin
         }
         
         StringBuilder rslt = new StringBuilder(baseViewName);
-        
-        String userAgent = req.getProperty("user-agent");
-        if (userAgent != null && patterns.size() != 0) {
-            for (Map.Entry<Pattern,String> y : patterns.entrySet()) {
-                if (y.getKey().matcher(userAgent).matches()) {
-                    rslt.append(y.getValue());
-                    break;
+    
+        if(renderNormal == true) { 
+            return rslt.toString();
+        }
+        else {   
+            String userAgent = req.getProperty("user-agent");
+            if (userAgent != null && patterns.size() != 0) {
+                for (Map.Entry<Pattern,String> y : patterns.entrySet()) {
+                    if (y.getKey().matcher(userAgent).matches()) {
+                        rslt.append(y.getValue());
+                        break;
+                    }
                 }
             }
+        return rslt.toString();
         }
 
-        return rslt.toString();
-
     }
-    
+   
+    public Boolean sentVal(PortletRequest req, String value) {
+        
+        if (value.equals(true)) {
+            renderNormal = true;
+        }
+        else {
+            renderNormal = false;
+        }
+
+    return renderNormal;
+    }
+ 
     public void setUserAgentMappings(Map<String,String> userAgentMappings) {
         this.userAgentMappings = Collections.unmodifiableMap(userAgentMappings);
     }

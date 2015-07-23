@@ -88,6 +88,9 @@ public class AnnouncementsViewController implements InitializingBean {
     @Autowired(required=true)
     private final IViewNameSelector viewNameSelector = null;
 
+    @Autowired(required=true)
+    private final IRespondrSelector value  = null;
+
     @Autowired
     private final UserPermissionCheckerFactory userPermissionCheckerFactory = null;
 
@@ -98,6 +101,7 @@ public class AnnouncementsViewController implements InitializingBean {
     public static final String PREFERENCE_USE_SCROLLING_DISPLAY = "AnnouncementsViewController.useScrollingDisplay";
     public static final String PREFERENCE_SCROLLING_DISPLAY_HEIGHT_PIXELS = "AnnouncementsViewController.scrollingDisplayHeightPixels";
     public static final String PREFERENCE_HIDE_ABSTRACT = "AnnouncementsViewController.hideAbstract";
+    public static final String PREFERENCE_RESPONDR = "AnnouncementsViewController.respondr";
     public static final String PREFERENCE_SYNDICATE_TOPICS_AS_NOTIFICATIONS = "AnnouncementsViewController.syndicateTopicsAsNotifications";
     public static final String PREFERENCE_SYNDICATE_TOPICS_ANNOUNCEMENTS_DISPLAY_FNAME = "AnnouncementsViewController.syndicateTopicsAnnouncementsDisplayFName";
     public static final String DEFAULT_SORT_STRATEGY = "START_DISPLAY_DATE_ASCENDING";
@@ -201,6 +205,14 @@ public class AnnouncementsViewController implements InitializingBean {
         model.addAttribute("emergency", emergencyAnnouncements);
         model.addAttribute("hideAbstract", Boolean.valueOf(prefs.getValue(PREFERENCE_HIDE_ABSTRACT,"false")));
         return viewNameSelector.select(request, "displayAnnouncements");
+    }
+
+
+    public Boolean respondrSet(Model model, RenderRequest req) throws PortletException {
+        PortletPreferences prefs = req.getPreferences();
+        String respondrVal = Boolean.valueOf(req.getParameter("respondr")).toString();
+        model.addAttribute("respondr", Boolean.valueOf(prefs.getValue(PREFERENCE_RESPONDR,respondrVal)));
+        return value.sentVal(req, respondrVal);
     }
 
     @RenderMapping(params="action=displayFullAnnouncement")
