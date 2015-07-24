@@ -32,7 +32,7 @@
         height: ${scrollingDisplayHeightPixels}px;
     }
 </style>
-
+<c:if test="${respondr}">
 <c:if test="${hideAbstract}">
     <script src="<rs:resourceURL value="/rs/jquery/1.10.2/jquery-1.10.2.min.js"/>" type="text/javascript"></script>
     <script type="text/javascript" src="<rs:resourceURL value="/rs/jquery-migrate/jquery-migrate-1.2.1.min.js"/>"></script>
@@ -193,3 +193,4 @@
         </div>
     </div>
 </div>
+<c:/if>

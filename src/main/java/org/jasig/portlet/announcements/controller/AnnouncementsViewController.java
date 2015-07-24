@@ -204,15 +204,20 @@ public class AnnouncementsViewController implements InitializingBean {
         model.addAttribute("announcements", announcementsShort);
         model.addAttribute("emergency", emergencyAnnouncements);
         model.addAttribute("hideAbstract", Boolean.valueOf(prefs.getValue(PREFERENCE_HIDE_ABSTRACT,"false")));
+        model.addAttribute("respondr", Boolean.valueOf(prefs.getValue(PREFERENCE_RESPONDR,"true")));
         return viewNameSelector.select(request, "displayAnnouncements");
     }
 
 
-    public Boolean respondrSet(Model model, RenderRequest req) throws PortletException {
+///    @RenderMapping(params = "action=displayAnnouncements")
+///    @RenderMapping()
+    //public Boolean respondrSet(Model model, RenderRequest req) throws PortletException {
+    public String respondrSet(Model model, RenderRequest req) throws PortletException {
         PortletPreferences prefs = req.getPreferences();
         String respondrVal = Boolean.valueOf(req.getParameter("respondr")).toString();
         model.addAttribute("respondr", Boolean.valueOf(prefs.getValue(PREFERENCE_RESPONDR,respondrVal)));
-        return value.sentVal(req, respondrVal);
+//        return value.sentVal(req, respondrVal);
+        return viewNameSelector.select(req, "displayAnnouncements");
     }
 
     @RenderMapping(params="action=displayFullAnnouncement")

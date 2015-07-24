@@ -21,7 +21,7 @@
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
 <link type="text/css" rel="stylesheet" href="<c:url value="/css/mobile.css"/>"/>
-
+<c:if test="${not respondr}">
 <div data-role="content" class="portlet-content">
 
     <ul data-role="listview" class="feed">
@@ -61,4 +61,4 @@
     </c:if>
 
 </div>
-
+<c:/if>

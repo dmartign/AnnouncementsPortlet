@@ -141,12 +141,15 @@ public class AnnouncementsPreferencesController {
 
     }
 
+    @RequestMapping()
     public void saveRespondr(ActionRequest req, ActionResponse resp) throws PortletException,IOException {
         PortletPreferences respondrPref = req.getPreferences();
         String respondrVal = Boolean.valueOf(req.getParameter("respondr")).toString();
         respondrPref.setValue(PREFERENCE_RESPONDR,respondrVal);
         respondrPref.store();
-
+        
+        resp.setPortletMode(PortletMode.VIEW);
+        resp.setRenderParameter("action", "displayAnnouncements");
     }
   	
   	@ModelAttribute("isGuest")

@@ -22,6 +22,7 @@
 
 <link type="text/css" rel="stylesheet" href="<c:url value="/css/mobile.css"/>"/>
 
+<c:if test="${not respondr}">
 <div class="content annplt-content">
 
     <c:if test="${not empty emergency}">
@@ -90,4 +91,5 @@
             </li>
         </ul>
     </div>
+</c:if>
 </c:if>
