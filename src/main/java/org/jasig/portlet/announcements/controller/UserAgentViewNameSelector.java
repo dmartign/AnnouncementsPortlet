@@ -32,6 +32,8 @@ public class UserAgentViewNameSelector implements IViewNameSelector, Initializin
     private Map<String,String> userAgentMappings;
     private final Map<Pattern,String> patterns = new HashMap<Pattern,String>();
 
+    private String respondr = "respondr";
+
     public void afterPropertiesSet() {
         // Compile our patterns
         for (Map.Entry<String,String> y : userAgentMappings.entrySet()) {
@@ -52,7 +54,12 @@ public class UserAgentViewNameSelector implements IViewNameSelector, Initializin
         String userAgent = req.getProperty("user-agent");
         if (userAgent != null && patterns.size() != 0) {
             for (Map.Entry<Pattern,String> y : patterns.entrySet()) {
-                if (y.getKey().matcher(userAgent).matches()) {
+                if (y.getKey().equals("respondr")) {
+                    rslt.append(y.getValue());
+                    break;
+                }
+                else if (y.getKey().matcher(userAgent).matches()) {
+                //if (y.getKey().matcher(userAgent).matches()) {
                     rslt.append(y.getValue());
                     break;
                 }

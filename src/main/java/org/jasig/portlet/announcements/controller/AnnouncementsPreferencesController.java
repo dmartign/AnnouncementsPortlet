@@ -62,7 +62,11 @@ public class AnnouncementsPreferencesController {
     @Autowired(required=true)
     private final IViewNameSelector viewNameSelector = null;
 
+//    @Autowired(required=true)
+//    private final IRespondrNameSelector respondrNameSelector = null;
+
     public static final String PREFERENCE_HIDE_ABSTRACT = "AnnouncementsViewController.hideAbstract";
+//    public static final String PREFERENCE_RESPONDR = "AnnouncementsViewController.respondr";
 
     public void setTss(ITopicSubscriptionService tss) {
         this.tss = tss;
@@ -91,6 +95,8 @@ public class AnnouncementsPreferencesController {
             @RequestParam("topicsToUpdate") Integer topicsToUpdate) throws PortletException,IOException {
 
         PortletPreferences prefs = request.getPreferences();
+//        PortletPreferences respondrPrefs = request.getPreferences();
+
         List<TopicSubscription> newSubscription = new ArrayList<TopicSubscription>();
 
         for (int i=0; i<topicsToUpdate; i++) {
@@ -131,7 +137,12 @@ public class AnnouncementsPreferencesController {
 
         String hideAbstract = Boolean.valueOf(request.getParameter("hideAbstract")).toString();
         prefs.setValue(PREFERENCE_HIDE_ABSTRACT,hideAbstract);
+
+//        String respondrVal = Boolean.valueOf(request.getParameter("respondr")).toString();
+//        respondrPrefs.setValue(PREFERENCE_RESPONDR, respondrValue);
+
         prefs.store();
+//        respondrPrefs.store();
 
         response.setPortletMode(PortletMode.VIEW);
         response.setRenderParameter("action", "displayAnnouncements");

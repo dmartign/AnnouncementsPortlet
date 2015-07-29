@@ -88,6 +88,9 @@ public class AnnouncementsViewController implements InitializingBean {
     @Autowired(required=true)
     private final IViewNameSelector viewNameSelector = null;
 
+//    @Autowired(required=true)
+//    private final IRespondrSelector respondrSelector = null;
+
     @Autowired
     private final UserPermissionCheckerFactory userPermissionCheckerFactory = null;
 
@@ -98,6 +101,7 @@ public class AnnouncementsViewController implements InitializingBean {
     public static final String PREFERENCE_USE_SCROLLING_DISPLAY = "AnnouncementsViewController.useScrollingDisplay";
     public static final String PREFERENCE_SCROLLING_DISPLAY_HEIGHT_PIXELS = "AnnouncementsViewController.scrollingDisplayHeightPixels";
     public static final String PREFERENCE_HIDE_ABSTRACT = "AnnouncementsViewController.hideAbstract";
+  //  public static final String PREFERENCE_RESPONDR = "AnnouncementsViewController.respondr";
     public static final String PREFERENCE_SYNDICATE_TOPICS_AS_NOTIFICATIONS = "AnnouncementsViewController.syndicateTopicsAsNotifications";
     public static final String PREFERENCE_SYNDICATE_TOPICS_ANNOUNCEMENTS_DISPLAY_FNAME = "AnnouncementsViewController.syndicateTopicsAnnouncementsDisplayFName";
     public static final String DEFAULT_SORT_STRATEGY = "START_DISPLAY_DATE_ASCENDING";
@@ -133,6 +137,7 @@ public class AnnouncementsViewController implements InitializingBean {
         }
 
         PortletPreferences prefs = request.getPreferences();
+    //    PortletPreferences respondrPrefs = request.getPreferences();
 
         List<Announcement> announcements;
         List<Announcement> emergencyAnnouncements;
@@ -193,6 +198,10 @@ public class AnnouncementsViewController implements InitializingBean {
         // Disable the edit link where appropriate
         Boolean disableEdit = Boolean.valueOf(prefs.getValue(PREFERENCE_DISABLE_EDIT, "false"));
         model.addAttribute("disableEdit", disableEdit);
+
+      //  String respondrVal = Boolean.valueOf(request.getParameter("respondr")).toString();
+      //  model.addAttribute("respondr", Boolean.valueOf(respondrPrefs.getValue(PREFERENCE_RESPONDR, respondrVal)));
+      //  return respondrSelector.sentVal(request, respondrVal);
 
         model.addAttribute("from", new Integer(from));
         model.addAttribute("to", new Integer(to));

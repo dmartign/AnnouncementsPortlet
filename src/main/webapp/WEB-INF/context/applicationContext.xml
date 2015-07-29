@@ -132,10 +132,20 @@
                 <entry key=".*Android.*" value=".mobile"/>
                 <entry key=".*Safari.*Pre.*" value=".mobile"/>
                 <entry key=".*Nokia.*AppleWebKit.*" value=".mobile"/>
+                <entry key=".*respondr.*" value=""/>
             </util:map>
         </property>
     </bean>
-    
+   <!-- 
+    <bean id="RespondrNameSelector" class="org.jasig.portlet.announcements.controller.UserAgentViewNameSelector">
+        <property name="respondrThemeMappings">
+            <util:map>
+                <entry key="respondr" value="true"/>
+                <entry key="respondr" value="false"/>
+            </util:map>
+        </property>
+    </bean>
+    --!>
     <bean id="groupService" class="org.jasig.portlet.announcements.service.PortletXMLGroupService" init-method="init" />
 
 </beans>
