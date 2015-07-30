@@ -32,6 +32,9 @@ public class UserAgentViewNameSelector implements IViewNameSelector, Initializin
     private Map<String,String> userAgentMappings;
     private final Map<Pattern,String> patterns = new HashMap<Pattern,String>();
 
+    private boolean isRespondr;
+    public static final String PREFERENCE_RESPONDR = "AnnouncementsViewController.respondr";
+
     public void afterPropertiesSet() {
         // Compile our patterns
         for (Map.Entry<String,String> y : userAgentMappings.entrySet()) {
@@ -41,7 +44,10 @@ public class UserAgentViewNameSelector implements IViewNameSelector, Initializin
 
     public String select(PortletRequest req, String baseViewName) {
         
-        // Assertions.
+        //isRespondr = Boolean.valueOf(req.getParameter(PREFERENCE_RESPONDR)); // equivalent to "respondr"  
+        isRespondr = Boolean.valueOf(req.getParameter("respondr"));   
+System.out.println("isRespondr: "+ isRespondr);    
+        // Assertions. 
         if (req == null) {
             String msg = "Argument 'req' cannot be null";
             throw new IllegalArgumentException(msg);
@@ -52,10 +58,17 @@ public class UserAgentViewNameSelector implements IViewNameSelector, Initializin
         String userAgent = req.getProperty("user-agent");
         if (userAgent != null && patterns.size() != 0) {
             for (Map.Entry<Pattern,String> y : patterns.entrySet()) {
-                if (y.getKey().matcher(userAgent).matches()) {
-                    rslt.append(y.getValue());
+                if (isRespondr == false) {  // normal view format is displayed
+                    rslt.append("");
                     break;
                 }
+                else {  // mobile view format is displayed
+                    if (y.getKey().matcher(userAgent).matches()) {
+                        rslt.append(y.getValue());
+                        break;
+                    } 
+                }
+
             }
         }
 
