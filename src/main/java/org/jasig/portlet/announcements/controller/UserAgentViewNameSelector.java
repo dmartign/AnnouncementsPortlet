@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletPreferences;
 
 import org.springframework.beans.factory.InitializingBean;
 
@@ -44,8 +45,8 @@ public class UserAgentViewNameSelector implements IViewNameSelector, Initializin
 
     public String select(PortletRequest req, String baseViewName) {
         
-        //isRespondr = Boolean.valueOf(req.getParameter(PREFERENCE_RESPONDR)); // equivalent to "respondr"  
-        isRespondr = Boolean.valueOf(req.getParameter("respondr"));   
+        PortletPreferences pref = req.getPreferences();
+        isRespondr = Boolean.valueOf(pref.getValue(PREFERENCE_RESPONDR, "true")); 
 System.out.println("isRespondr: "+ isRespondr);    
         // Assertions. 
         if (req == null) {
@@ -58,7 +59,7 @@ System.out.println("isRespondr: "+ isRespondr);
         String userAgent = req.getProperty("user-agent");
         if (userAgent != null && patterns.size() != 0) {
             for (Map.Entry<Pattern,String> y : patterns.entrySet()) {
-                if (isRespondr == false) {  // normal view format is displayed
+                if (isRespondr == true) {  // normal view format is displayed
                     rslt.append("");
                     break;
                 }
